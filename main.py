@@ -42,11 +42,13 @@ def add_to_path():
         system(f'{command} >> ~/.profile')
         system(f'{command} >> ~/.zprofile')
         system(f'{command} >> ~/.bash_profile')
-        
+
         pop_up_info('Feito!', 'Diretório adicionado ao PATH com sucesso')
+        return True
     except Exception as err:
         print(err.__class__)
         pop_up_critical('ERRO!', 'Um erro inesperado ocorreu!')
+        return True
 
 
 window = uic.loadUi('ui/main.ui')
