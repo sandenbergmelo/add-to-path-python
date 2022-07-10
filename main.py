@@ -28,7 +28,7 @@ def add_to_path():
         return False
 
     if not Path(directory_path).is_dir():
-        pop_up_warning('ERRO!', 'O caminho informado não é uma pasta')
+        pop_up_warning('ERRO!', 'O caminho informado não é uma pasta.')
         return False
 
     relative_path = directory_path.removeprefix(HOME)
@@ -43,7 +43,7 @@ def add_to_path():
         system(f'{command} >> ~/.zprofile')
         system(f'{command} >> ~/.bash_profile')
 
-        pop_up_info('Feito!', 'Diretório adicionado ao PATH com sucesso')
+        pop_up_info('Feito!', 'Diretório adicionado ao PATH com sucesso!')
         return True
     except Exception as err:
         print(err.__class__)
