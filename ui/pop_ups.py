@@ -20,6 +20,7 @@ def pop_up_warning(titulo, texto):
     msg.setStyleSheet(load_stylesheet())
     msg.exec()
 
+
 def pop_up_critical(titulo, texto):
     msg = QtWidgets.QMessageBox()
     msg.setWindowTitle(titulo)
