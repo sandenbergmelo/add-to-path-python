@@ -48,7 +48,7 @@ def add_to_path():
     except Exception as err:
         print(err.__class__)
         pop_up_critical('ERRO!', 'Um erro inesperado ocorreu!')
-        return True
+        return False
 
 
 window = uic.loadUi('ui/main.ui')
