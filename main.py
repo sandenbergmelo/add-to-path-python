@@ -34,11 +34,11 @@ def add_to_path():
         pop_up_warning('ERRO!', 'O caminho informado não é uma pasta.')
         return False
 
-    relative_path = directory_path.removeprefix(HOME)
-    if directory_path.startswith(HOME):
-        relative_path = f'$HOME{relative_path}'
+    path = '/' + directory_path.strip('/')
+    if path.startswith(HOME):
+        path = f'$HOME{path.removeprefix(HOME)}'
 
-    line_to_put = f'export PATH=\"$PATH:{relative_path}\"'
+    line_to_put = f'export PATH=\"$PATH:{path}\"'
     command = f'echo \'{line_to_put}\''
 
     is_in_path = [False, False, False]
