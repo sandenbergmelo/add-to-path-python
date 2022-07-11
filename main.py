@@ -13,7 +13,7 @@ app.setStyleSheet(load_stylesheet())
 def choose_directory():
     directory_path = QtWidgets.QFileDialog.getExistingDirectory(
         caption='Escolher pasta',
-        directory=getenv('HOME'),
+        directory=getenv('HOME')
     )
 
     window.txtPath.setText(directory_path)
