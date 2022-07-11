@@ -20,8 +20,11 @@ def choose_directory():
 
 
 def add_to_path():
-    directory_path = str(window.txtPath.text()).strip()
     HOME = getenv('HOME')
+    directory_path = str(window.txtPath.text()).strip()
+    profiles = [f'{HOME}/.profile',
+                f'{HOME}/.bash_profile',
+                f'{HOME}/.zprofile']
 
     if directory_path == '':
         pop_up_warning('ERRO!', 'Caminho vazio!')
@@ -32,18 +35,36 @@ def add_to_path():
         return False
 
     relative_path = directory_path.removeprefix(HOME)
-
     if directory_path.startswith(HOME):
         relative_path = f'$HOME{relative_path}'
 
-    command = f'echo \'export PATH=\"$PATH:{relative_path}\"\''
+    line_to_put = f'export PATH=\"$PATH:{relative_path}\"'
+    command = f'echo \'{line_to_put}\''
+
+    is_in_path = [False, False, False]
+
+    for i, profile in enumerate(profiles):
+        dot_profile_path = Path(profile)
+        if not dot_profile_path.is_file():
+            dot_profile_path.touch()
+
+        with open(profile, 'r') as dot_profile_file:
+            for line in dot_profile_file:
+                if line.removesuffix('\n') == line_to_put:
+                    is_in_path[i] = True
+                    break
+
+    if all(is_in_path):
+        pop_up_warning('ERRO!', 'A pasta informada já está no PATH.')
+        return False
 
     try:
-        system(f'{command} >> ~/.profile')
-        system(f'{command} >> ~/.zprofile')
-        system(f'{command} >> ~/.bash_profile')
+        for i, profile in enumerate(profiles):
+            if not is_in_path[i]:
+                system(f'{command} >> {profile}')
 
         pop_up_info('Feito!', 'Diretório adicionado ao PATH com sucesso!')
+        window.txtPath.setText('')
         return True
     except Exception as err:
         print(err.__class__)
