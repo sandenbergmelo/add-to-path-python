@@ -4,10 +4,12 @@ from os import getenv, system
 from PyQt5 import QtWidgets, uic
 from qdarktheme import load_stylesheet
 
-from ui.pop_ups import *
+from ui.pop_ups import Popup
 
 app = QtWidgets.QApplication([])
 app.setStyleSheet(load_stylesheet())
+
+pop_up = Popup()
 
 
 def choose_directory():
@@ -27,11 +29,11 @@ def add_to_path():
                 f'{HOME}/.zprofile']
 
     if directory_path == '':
-        pop_up_warning('ERRO!', 'Caminho vazio!')
+        pop_up.warning('ERRO!', 'Caminho vazio!')
         return False
 
     if not Path(directory_path).is_dir():
-        pop_up_warning('ERRO!', 'O caminho informado não é uma pasta.')
+        pop_up.warning('ERRO!', 'O caminho informado não é uma pasta.')
         return False
 
     path = '/' + directory_path.strip('/')
@@ -55,7 +57,7 @@ def add_to_path():
                     break
 
     if all(is_in_path):
-        pop_up_warning('ERRO!', 'A pasta informada já está no PATH.')
+        pop_up.warning('ERRO!', 'A pasta informada já está no PATH.')
         return False
 
     try:
@@ -63,12 +65,12 @@ def add_to_path():
             if not is_in_path[i]:
                 system(f'{command} >> {profile}')
 
-        pop_up_info('Feito!', 'Diretório adicionado ao PATH com sucesso!')
+        pop_up.info('Feito!', 'Diretório adicionado ao PATH com sucesso!')
         window.txtPath.setText('')
         return True
     except Exception as err:
         print(err.__class__)
-        pop_up_critical('ERRO!', 'Um erro inesperado ocorreu!')
+        pop_up.critical('ERRO!', 'Um erro inesperado ocorreu!')
         return False
 
 
