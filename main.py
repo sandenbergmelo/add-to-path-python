@@ -1,8 +1,9 @@
 from pathlib import Path
 from os import getenv, system
 
-from PyQt5 import QtWidgets, uic
+from PySide6 import QtWidgets
 from qdarktheme import load_stylesheet
+from PySide6.QtUiTools import QUiLoader
 
 from ui.pop_ups import Popup
 
@@ -10,12 +11,13 @@ app = QtWidgets.QApplication([])
 app.setStyleSheet(load_stylesheet())
 
 pop_up = Popup()
+loader = QUiLoader()
 
 
 def choose_directory():
     directory_path = QtWidgets.QFileDialog.getExistingDirectory(
         caption='Escolher pasta',
-        directory=getenv('HOME')
+        dir=getenv('HOME'),
     )
 
     window.txtPath.setText(directory_path)
@@ -74,7 +76,7 @@ def add_to_path():
         return False
 
 
-window = uic.loadUi('ui/main.ui')
+window = loader.load('ui/main.ui')
 
 window.btnDirectory.clicked.connect(choose_directory)
 window.btnAdd.clicked.connect(add_to_path)
