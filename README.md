@@ -1,2 +1,2 @@
 # Add to PATH Python
-Programa simples feito em QT e Python que adiciona pastas à variável PATH no Linux
+Simple program written in QT and Python to add directories to the PATH variable in Linux.
