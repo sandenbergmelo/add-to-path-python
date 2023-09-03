@@ -7,9 +7,9 @@ readme = "README.md"
 packages = [{include = "add_to_path_python"}]
 
 [tool.poetry.dependencies]
-python = ">=3.8, <3.11"
-pyside6 = "^6.4.1"
-pyqtdarktheme = "^1.2.1"
+python = "<3.12,>=3.7"
+PySide6 = "^6.5.2"
+pyqtdarktheme = "^2.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
