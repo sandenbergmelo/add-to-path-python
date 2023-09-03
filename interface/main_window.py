@@ -9,25 +9,29 @@ from utils.pop_ups import pop_up
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        super().__init__()
+        super(MainWindow, self).__init__()
         self.setupUi(self)
+        self.HOME = getenv('HOME')
+
+        # Connects
+        self.btnDirectory.clicked.connect(self.choose_directory)
+        self.btnAdd.clicked.connect(self.add_to_path)
 
     def choose_directory(self):
         directory_path = QFileDialog.getExistingDirectory(
             caption='Escolher pasta',
-            dir=getenv('HOME'),
+            dir=self.HOME
         )
 
         self.txtPath.setText(directory_path)
 
     def add_to_path(self):
-        HOME = getenv('HOME')
         directory_path = str(self.txtPath.text()).strip()
-        profiles = [f'{HOME}/.profile',
-                    f'{HOME}/.bash_profile',
-                    f'{HOME}/.zprofile']
+        profiles = [f'{self.HOME}/.profile',
+                    f'{self.HOME}/.bash_profile',
+                    f'{self.HOME}/.zprofile']
 
-        if directory_path == '':
+        if not directory_path:
             pop_up('ERRO!', 'Caminho vazio!', 'warning')
             return False
 
@@ -36,8 +40,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return False
 
         path = '/' + directory_path.strip('/')
-        if path.startswith(HOME):
-            path = f'$HOME{path.removeprefix(HOME)}'
+        if path.startswith(self.HOME):
+            path = f'$HOME{path.removeprefix(self.HOME)}'
 
         line_to_put = f'export PATH=\"$PATH:{path}\"'
         command = f'echo \'{line_to_put}\''
