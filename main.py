@@ -3,6 +3,8 @@ from pathlib import Path
 
 import flet as ft
 
+from utils.pop_ups import pop_up
+
 
 def main(page: ft.Page):
     HOME = f'{getenv("HOME")}/'
@@ -10,25 +12,26 @@ def main(page: ft.Page):
     page.title = 'Add to Path'
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.window_max_width = 500
-    page.window_max_height = 200
+    page.window_max_height = 300
 
     def add_to_field(e: ft.FilePickerResultEvent):
         path_field.value = e.path
         page.update()
 
-    def add_to_path(directory_path):
+    def add_to_path(directory_path: str):
         HOME = getenv("HOME")
+        directory_path = directory_path.strip()
 
         profiles = [f'{HOME}/.profile',
                     f'{HOME}/.bash_profile',
                     f'{HOME}/.zprofile']
 
         if not directory_path:
-            # pop_up('ERRO!', 'Caminho vazio!', 'warning')
+            pop_up(page, 'ERRO!', 'Caminho vazio!')
             return False
 
         if not Path(directory_path).is_dir():
-            # pop_up('ERRO!', 'O caminho informado não é uma pasta.', 'warning')
+            pop_up(page, 'ERRO!', 'O caminho informado não é uma pasta.')
             return False
 
         path: str = '/' + directory_path.strip('/')
@@ -52,7 +55,7 @@ def main(page: ft.Page):
                         break
 
         if all(is_in_path):
-            # pop_up('ERRO!', 'A pasta já está adicionada ao PATH.', 'warning')
+            pop_up(page, 'ERRO!', 'A pasta já está adicionada ao PATH.')
             return False
 
         try:
@@ -60,13 +63,12 @@ def main(page: ft.Page):
                 if not is_in_path[i]:
                     system(f'{command} >> {profile}')
 
-            # pop_up(
-            #     'Sucesso!', 'A pasta foi adicionada ao PATH com sucesso!', 'information')
+            pop_up(page, 'Sucesso!', 'A pasta foi adicionada ao PATH com sucesso!')
             path_field.value = ''
             return True
         except Exception as err:
             print(err.__class__)
-            # pop_up('ERRO!', 'Ocorreu um erro ao adicionar a pasta ao PATH.', 'critical')
+            pop_up(page, 'ERRO!', 'Ocorreu um erro ao adicionar a pasta ao PATH.')
             return False
 
     path_field = ft.TextField()
