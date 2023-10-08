@@ -1,31 +1,4 @@
-from os import getenv, system
-from pathlib import Path
-
-from PySide6.QtWidgets import QFileDialog, QMainWindow
-
-from interface.UI_main_window import Ui_MainWindow
-from utils.pop_ups import pop_up
-
-
-class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.setupUi(self)
-        self.HOME = getenv('HOME')
-
-        # Connects
-        self.btnDirectory.clicked.connect(self.choose_directory)
-        self.btnAdd.clicked.connect(self.add_to_path)
-
-    def choose_directory(self):
-        directory_path = QFileDialog.getExistingDirectory(
-            caption='Escolher pasta',
-            dir=self.HOME
-        )
-
-        self.txtPath.setText(directory_path)
-
-    def add_to_path(self):
+def add_to_path(self):
         directory_path = str(self.txtPath.text()).strip()
         profiles = [f'{self.HOME}/.profile',
                     f'{self.HOME}/.bash_profile',

@@ -1,16 +1,10 @@
-from sys import argv
+import flet as ft
 
-from PySide6.QtWidgets import QApplication
-
-from interface.main_window import MainWindow
-
-
-def main():
-    app = QApplication(argv)
-    window = MainWindow()
-    window.show()
-    app.exec()
+def main(page: ft.Page):
+    page.title = 'Add to Path'
+    page.window_max_height
+    page.window_max_width
 
 
 if __name__ == '__main__':
-    main()
+    ft.app(target=main)
