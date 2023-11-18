@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Sandenberg Ferreira Melo <77549672+sandenbergmelo@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "add_to_path_python"}]
 
 [tool.poetry.dependencies]
 python = "<3.12,>=3.7"
