@@ -4,7 +4,7 @@ from pathlib import Path
 from PySide6.QtWidgets import QFileDialog, QMainWindow
 
 from interface.UI_main_window import Ui_MainWindow
-from utils.pop_ups import pop_up
+from interface.pop_ups import pop_up
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
